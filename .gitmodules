@@ -1,0 +1,6 @@
+[submodule "back"]
+  path = back
+  url = https://github.com/kuritaeiji/rails_nuxt_back.git
+[submodule "front"]
+  path = front
+  url = https://github.com/kuritaeiji/rails_nuxt_front.git
