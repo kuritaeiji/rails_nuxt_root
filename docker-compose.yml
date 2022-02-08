@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  db:
+    container_name: db
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: root
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql:/var/lib/mysql
+
+  back:
+    container_name: back
+    build: ./back
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: root
+    ports:
+      - 3000:3000
+    volumes:
+      - ./back:/app
+      - bundle:/app/vendor/bundle
+    depends_on:
+      - db
+    command: bundle exec rails s -b 0.0.0.0
+    stdin_open: true
+
+  front:
+    container_name: front
+    build: ./front
+    volumes:
+      - ./front:/app
+      - node_modules:/app/node_modules
+    ports:
+      - 8080:3000
+    depends_on:
+      - back
+    command: yarn dev
+    stdin_open: true
+
+volumes:
+  mysql:
+  bundle:
+  node_modules:
