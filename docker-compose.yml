@@ -23,7 +23,7 @@ services:
       - 3000:3000
     volumes:
       - ./back:/app
-      - bundle:/app/vendor/bundle
+      - bundle:/usr/local/bundle
     depends_on:
       - db
     command: bundle exec rails s -b 0.0.0.0
@@ -32,8 +32,6 @@ services:
   front:
     container_name: front
     build: ./front
-    environment:
-      API_URL: 'http://localhost:3000'
     volumes:
       - ./front:/app
       - node_modules:/app/node_modules
